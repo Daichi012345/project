@@ -1,0 +1,70 @@
+dialog {
+    padding: 0;
+}
+
+/* ダイアログの枠 */
+#saftyDialog {
+    height: 344px;
+    width: 337px;
+    border-color: #49C381;
+    border-width: 5px;
+    /* background-color: rgba(0, 0, 0, 0.4); */
+
+}
+
+/* 背景 */
+#saftyDialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* ダイアログの中身 */
+#saftyDialogWrap {
+
+}
+
+.contentDiv {
+    display: flex;
+    /* justify-content: center; */
+}
+
+#safetyForm {
+    
+}
+
+#formTitle {
+    height: 60px;
+    background-color: #49C381;
+    font-size: 24px;
+    text-decoration: underline;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.category {
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 50px;
+}
+
+.radio {
+    margin-top: 27px;
+    margin-left: 40px;
+    
+}
+
+.attention {
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: #EB4F3A;
+}
+
+#sendBtn {
+    color: white;
+    background: -webkit-linear-gradient(top, #49C381, #63EBA1);
+    border: none;
+    border-radius: 10px;
+    height: 36px;
+    width: 224px;
+    text-align: center;
+}

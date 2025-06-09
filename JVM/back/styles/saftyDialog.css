@@ -1,0 +1,86 @@
+dialog {
+    padding: 0;
+}
+
+/* ダイアログ全体 */
+#saftyDialog {
+    margin: auto;
+    width: 337px;
+    /* height: 344px; */
+    border-color: #49C381;
+    border-width: 5px;
+}
+
+/* 背景 */
+#saftyDialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* ダイアログの中身 */
+#saftyDialogWrap {
+    width: 100%;
+}
+
+.contentDiv {
+    display: flex;
+    margin: 0;
+    /* justify-content: center; */
+}
+
+#saftyDialog #formTitle {
+    display: flex;
+    background-color: #49C381;
+    font-size: 24px;
+    color: white;
+}
+
+#formTitle p {
+    text-decoration: underline;
+    margin-left: 35%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#formTitle div {
+    margin-left: 90px;
+    cursor: pointer;
+}
+
+.category {
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 50px;
+    /* margin-top: 0; */
+    margin-bottom: 0;
+}
+
+.contentDiv p {
+    margin-top: 20px;
+}
+
+.contentDiv .radio {
+    margin-top: 27px;
+    margin-left: 40px;
+}
+
+.attention {
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: #EB4F3A;
+    margin-top: 20px;
+}
+
+#sendBtn {
+    color: white;
+    background: -webkit-linear-gradient(top, #49C381, #63EBA1);
+    border: none;
+    border-radius: 10px;
+    height: 36px;
+    width: 224px;
+    text-align: center;
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* margin: 10px auto 10px 50px; */
+}

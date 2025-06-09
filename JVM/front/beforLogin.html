@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/jvm.css">
+
+    <title>安否確認掲示板</title>
+</head>
+<body>
+    <header>
+        <div class="name font">
+            
+            <h1>安否確認掲示板</h1>
+        </div>
+        <!-- <nav>
+            <ul class="nav-menu">
+              <h1>安否確認掲示板</h1>
+            </ul>
+        </nav> -->
+    </header>
+    <main>
+        <nav>
+            <div id="contentHeader">
+                <h2>&#x1F494; 安否情報</h2>
+            </div>
+        </nav>
+        <div>
+            <button id="login">ログイン</button>
+         </div>
+            <nav>
+                <ul class="nav-menu">
+                    <!-- <button id="whole">全体</button> -->
+                    <input type="submit" for="whole" name="whole" id="whole" value="全体">
+                    <!-- <button id="safe">安全</button> -->
+                    <input type="submit" for="safe" name="safe" id="safe" value="安全">
+                    <!-- <button id="damage">被害あり</button> -->
+                    <input type="submit" for="damage" name="damage" id="damage" value="被害あり">
+    
+                </ul>
+            </nav>
+    
+        <textarea  name="box" id="box" cols="180" rows="20" placeholder="情報がありません" required></textarea>
+
+
+        
+     </main>
+
+  
+
+
+    <script src="/jvm.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* body {
+  font-family: Helvetica;
+  overflow-y: hidden;
+  
+} */
+
+/* ダイアログ全体 */
+#loginDialog, #registerDialog {
+  margin: auto;
+  width: 337px;
+  border: none;
+  text-align: center;
+  padding: 20px;
+}
+
+#login-form #loginformTitle, #register-form #registerformTitle {
+  text-decoration: underline;
+  margin: 20px;
+}
+
+.formField {
+  display: flex;
+  justify-content: center;
+}
+.formField img {
+  width: 29px;
+  height: 33px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.formField input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 175px;
+  border: 0;
+  margin: 15px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+#registerDialogWrap #register, #loginDialogWrap #login {
+  border: 0;
+  background: -webkit-linear-gradient(top, #49C381, #63EBA1);
+  width: 224px;
+  height: 36px;
+  padding: auto;
+  margin: 10px;
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+/* #register-form .register{
+  color: #1E88E9;
+  text-decoration: underline;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 140px;
+} */
+
+.material-icons{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

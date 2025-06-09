@@ -1,0 +1,52 @@
+*{
+    box-sizing: border-box;
+}
+*:focus{
+    outline: mone;
+}
+header{
+    background-color: rgb(52, 227, 168);
+    width: 100%;
+    padding: 0 20%;
+    color: white;
+
+}
+h2{
+    background-color: rgb(170, 174, 173);
+    width: 25%;
+    text-align: center;
+    color: white;
+}
+h1{
+    text-align: center;
+}
+textarea{
+    text-align: center;
+    font-weight: bold;
+    text-decoration: dashed;
+}
+.nav-menu{
+    display: flex;
+    flex-wrap:wrap;
+    font-weight:bold;
+    margin-left:  83% ;
+}
+.nav-menu #whole{
+    background-color: black;
+    color: white;
+}
+.nav-menu #safe{
+    background-color: rgb(52, 227, 168);
+    color: white;
+}
+.nav-menu #damage{
+    background-color: rgb(212, 39, 39);
+    color: white;
+}
+#login{
+    display: flex;
+    flex-wrap:wrap;
+    font-weight:bold;
+    width:  110px;
+    margin-left: 90%;
+}

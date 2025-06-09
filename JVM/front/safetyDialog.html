@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/saftyDialog.css">
+    <title>safetyModal</title>
+</head>
+<body>
+    <!-- 被害情報入力ダイアログ -->
+    <dialog id="saftyDialog" open>
+        <div id="saftyDialogWrap">
+            <form id="safetyForm">
+                <div id="formTitle">被害情報</div>
+                <div class="contentDiv">
+                    <p class="category">被害</p>
+                    <label><input type="radio" name="radio1" class="radio">あり</label>
+                    <label><input type="radio" name="radio1" class="radio">なし</label>
+                </div>
+                <div class="contentDiv">
+                    <p class="category">避難</p>
+                    <label><input type="radio" name="radio2" class="radio">完了</label>
+                    <label><input type="radio" name="radio2" class="radio">未完了</label>
+                </div>
+                <p class="attention">※被害あり、または避難未完了を選択した場合情報入力画面に進みます</p>
+                <input type="submit" id="sendBtn">
+            </form>
+        </div>
+    </dialog>
+<body>
+</html>

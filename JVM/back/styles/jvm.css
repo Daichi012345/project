@@ -1,0 +1,164 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+*:focus{
+    outline: mone;
+}
+
+header {
+    background-color: #49C381;
+    color: white;
+    text-align: center;
+    padding-top: 30px;
+    height: 109px;
+    top: 0;
+    width: 100%;
+}
+
+/* ボタンのcss -------------------------------------------------------- */
+#Btns {
+    display: flex;
+}
+
+/* ログインボタン */
+#userBtns {
+    margin-left: auto;
+    margin-right: 70px;
+}
+#loginBtn {
+    display: flex;
+    justify-content: space-around;
+    border-radius: 10px;
+    border: none;
+    background-color: #D9D9D9;
+    width:  222px;
+    height: 43px;
+    margin-left: auto;
+    margin-right: 5%;
+    margin-top: 30px;
+}
+#loginBtn p {
+    font-weight:bold;
+    font-size: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#loginBtn #small {
+    font-size: 16px;
+}
+#loginBtn img {
+    height: 40px;
+    width: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#logoutBtn {
+    text-align: right;
+    color: #1E88E9;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 10px;
+}
+
+/* 安否情報入力ボタン */
+#editBtn {
+    display: flex;
+    font-size: 24px;
+    height: 53px;
+    width: 438px;
+    background-color: #8F8F8F;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    margin-left: 5%;
+    margin-bottom: 20px;
+    margin-top: 70px;
+}
+#editBtn p {
+    margin-left: auto;
+    margin-right: 40%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#editBtn img {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10%;
+}
+
+/* タブ --------------------------------------------------------- */
+#tab-area input[type="radio"] {
+    display: none;                  /* ラジオボタンの丸を隠す */
+}
+
+/* タブの形 */
+#tab-area input {
+    display: inline-block;            /* インラインブロック化 */
+    color: white;
+    font-weight: bold;
+    width: 90px;
+    text-align: center;
+}
+#tab-area #whole {
+    background-color: black;
+    margin-left: 75%;
+}
+#tab-area #safe {
+    background-color: #49C381;
+}
+#tab-area #damage {
+    background-color: #E1422C;
+}
+
+.status button{
+    margin: 5%;
+    display: inline-block;            /* インラインブロック化 */
+    color: white;
+    font-weight: bold;
+    width: 200px;
+    text-align: center;
+    background-color: #E1422C;
+}
+
+/* #tab-area .tab-box div {
+    height: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    opacity: 0;
+    border: 2px solid #D9D9D9; */
+    /* transition: opacity 0.7s; */ /* タブ切り替えのアニメーション */
+/* } */
+/* コンテンツの内容 */
+/* #tab1:checked ~ .tab-box #tab-content1 {
+    height: auto;
+    opacity: 1;
+    padding: 10px;
+    border: 3px solid #D9D9D9;
+    width: 90%;
+    height: 430px;     
+    margin-left: auto;
+    margin-right: auto;
+}
+#tab2:checked ~ .tab-box #tab-content2 {
+    height: auto;
+    opacity: 1;
+    padding: 10px;
+    border: 3px solid #49C381;
+    width: 90%;
+    height: 430px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#tab3:checked ~ .tab-box #tab-content3 {
+    height: auto;
+    opacity: 1;
+    padding: 10px;
+    border: 3px solid #E1422C;
+    width: 90%;
+    height: 430px;
+    margin-left: auto;
+    margin-right: auto;
+} */

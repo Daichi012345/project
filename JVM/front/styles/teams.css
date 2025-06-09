@@ -1,0 +1,66 @@
+body {
+  font-family: Helvetica;
+  background: #a9a9a9;
+  overflow-y: hidden;
+}
+
+.login-page {
+  height: 100vh;  
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    
+  }
+
+.contact-title{
+    text-decoration: underline;
+}
+
+.uiform {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 50x;
+    padding: 50px;
+    text-align: center
+  }
+
+  .login-page input {
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
+.login-page .message a {
+    color: #4169e1;
+}
+
+.formFieeld{
+  display: flex;
+  justify-content: space-between;
+ }
+
+input[type='submit']{
+  outline: 0;
+  background: -webkit-linear-gradient(top, #49C381, #63EBA1);
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px; 
+  border-radius:20px;
+}
+
+
+ 
+
+
+ 
+ 

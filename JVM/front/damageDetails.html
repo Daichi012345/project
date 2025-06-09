@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./styles/damageDetails.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <header>
+            <!-- hogehoge -->
+            <h1>安否確認掲示板</h1>
+        </header>
+        <main>
+            <div class="contentHeader">
+                <div class="backBtn">
+                    <img src="images/backBtn.png" alt="ロゴ" width="30">
+                </div>
+                <h1 class="taitle">被害情報の入力</h1>
+            </div>
+            <div class="contentDiv">
+                <p class="contents">現在地：</p>
+                <p name="place" class="contentValue">大阪府oo市××区</p>
+                <input name="editBtn" type="submit" value="編集" class="editBtn" />
+            </div>
+            <hr class="line">
+            <div class="contentDiv">
+                <p class="contents">被害状況：</p>
+                <!-- <input type="submit" value="編集" class="stateBtn" /> -->
+            </div>
+            <input name="state" type="text" class="state" />
+        </main>
+        <input name="sendBtn" type="submit" id="sendBtn" value="送信"/>
+    </div>
+</body>
+</html>
