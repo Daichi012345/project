@@ -1,0 +1,254 @@
+* {
+    box-sizing: border-box;
+}
+h2 {
+    size: 3em;
+    text-align: center;
+    color: #fefdfd;
+}
+.container {
+    width: 500px;
+    margin: auto;
+    font-weight: bold;
+}
+ul {
+    list-style-type: none;
+}
+body {
+    font-family: Verdana, sans-serif;
+}
+.month {
+    padding: 70px 25px;
+    width: 100%;
+    background: #fefdfd;
+}
+.month ul {
+    margin: 0;
+    padding: 0;
+}
+.month ul li {
+    color: #8E5DB5;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+.month .prev {
+    float: left;
+    padding-top: 10px;
+}
+.month .next {
+    float: right;
+    padding-top: 10px;
+}
+.weekdays {
+    margin: auto;
+    padding: 10px 0;
+    background-color: #ddd;
+}
+.weekdays li {
+    display: inline-block;
+    width: 13%;
+    color: #666;
+    text-align: center;
+}
+.days {
+    margin: auto;
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+}
+.days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #8E5DB5;
+    cursor: pointer;
+    position: relative;
+}
+.days li .active {
+    padding: 5px;
+    background: #CC0000;
+    color: white !important;
+}
+/* Note styles */
+.days .note {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #000;
+    background-color: #fff;
+    padding: 2px;
+    border: 1px solid #ccc;
+    display: none;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    z-index: 1;
+}
+/* dialog　style */
+.dialog {
+    width: 350px;
+    height: 350px;
+    background-color: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+    border: 0px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.dialog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.dialog-container h2 {
+    color: #000;
+    font-size: 1.5em;
+    margin: 0;
+    text-align: center;
+}
+
+.dialog-container p {
+    color: rgb(0, 0, 0);
+    font-size: 0.9em;
+    margin: 0;
+    text-align: left;
+}
+
+.dialog-container input {
+    width: 100%;
+    padding: 6px;
+    margin-top: 3px;
+    box-sizing: border-box;
+}
+
+/* Flex container for buttons */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+#saveAppointment,
+#dialog-close-btn {
+    display: inline-block;
+    width: 48%;
+    padding: 0.6em;
+    font-size: 0.9em;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background: #0C88CA;
+    border-bottom: 4px solid #005691;
+    border-radius: 4px;
+    transition: .2s;
+    margin-top: 10px;
+}
+
+#saveAppointment:hover,
+#dialog-close-btn:hover {
+    cursor: pointer;
+    text-decoration: none;
+    background: #005691;
+    transform: translate3d(0, 4px, 0);
+    transition: .2s;
+    border-bottom: none;
+}
+
+
+/* Styles for days with appointments */
+.has-appointment {
+    background-color: green;
+    color: white;
+}
+.no-appointment {
+    background-color: white;
+}
+.mynote {
+    padding: 20px;
+    background: #f9f9f9;
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+}
+.note-content {
+    display: none;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+
+
+
+/* .dialog {
+    width: calc(100vw - 32px);
+    max-width: 200px;
+    max-height: calc(100% - 48px);
+    height: 200px;
+    background-color: #fff;
+    position: fixed; */
+    /* position: relative; */
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+    border: 0px;
+    padding: 24px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    overflow-y: auto;
+}
+.dialog-container h2 {
+    color: #000;
+}
+
+.dialog-container p{
+    color: rgb(0, 0, 0);
+    font-size: 1em;
+    padding: 1px;
+    margin: 10px;
+    width: 30px; 
+    text-align: center;
+}  
+
+
+#dialog-close-btn {
+    display: inline-block;
+    width: 80px;
+    padding: 0.8em;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background: #0C88CA;
+    border-bottom: 4px solid #005691;
+    border-radius: 4px;
+    transition: .0s;
+    margin: 50px 20px 0 150px;
+    margin-right: 0; */
+    /* 上下50px、左右に余白を追加 */
+/* }
+
+
+#dialog-close-btn:hover {
+    cursor: pointer;
+    text-decoration: none;
+    background: #005691;
+    transform: translate3d(0, 4px, 0);
+    transition: .0s;
+    border-bottom: none;
+} */

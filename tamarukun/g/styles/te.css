@@ -1,0 +1,186 @@
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+.headerMenu {
+    text-align: center;
+    color: #FFFF;
+    text-shadow: 1px 1px 1px black;
+    padding: 17px;
+    width: 100%;
+    position: fixed;
+}
+
+.menuIcon {
+    width: 97%;
+    position: relative;
+}
+
+.hamburgerMenu {
+    position: absolute;
+    height: 3.5em;
+    width: 2em;
+    top: 2.3em;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.hamburgerBar {
+    opacity: 1;
+    height: 0.25em;
+    width: 2.5em;
+    background-color: white;
+    box-shadow: 1px 1px 0 ,
+        1px -1px 0 ,
+        -1px 1px 0 ,
+        -1px -1px 0 ;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.25s ease-in-out;
+}
+
+.hb1 {
+    top: 25%;
+}
+
+.hb2 {
+    top: 50%;
+    z-index: 100;
+}
+
+.hb3 {
+    top: 75%;
+}
+
+.menuOpen .hb1 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.menuOpen .hb2 {
+    height: 0.3em;
+    width: 0.3em;
+    background-color: white;
+    box-shadow: 1px 1px 0 skyblue,
+        1px -1px 0 skyblue,
+        -1px -1px 0 skyblue,
+        -1px -1px 0 skyblue;
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.menuOpen .hb3 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(225deg);
+}
+
+.menuList {
+    pointer-events: auto;
+    width: 25%;
+    height: 100%;
+    z-index: 50;
+    padding: 5em 1em 3em 2em;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    background-color: #87ceeb;
+    transition: 0.25s ease-in-out;
+    font-size: 125%;
+    color: black;
+}
+
+.menuOpen .menuList {
+    left: 75%;
+    box-shadow: -1px 0 1em rgba(0, 0, 0, 0.5);
+}
+
+
+
+h1{
+    font-size: 5em;
+    padding: 80px;
+    font-weight: bold;
+    text-align: center;
+    color: #000;
+    text-shadow:1px 1px 0 #FFF, -1px -1px 0 #FFF,
+                -1px 1px 0 #FFF, 1px -1px 0 #FFF,
+                0px 1px 0 #FFF,  0-1px 0 #FFF,
+                -1px 0 0 #FFF, 1px 0 0 #FFF;
+}
+
+body{
+    background-image: url('../img/bodyBack.jpg');
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-color: #FFFF;
+}
+
+form div {
+    margin-bottom: 15px; /* 必要に応じて値を調整します */
+}
+
+#registrationDialog{
+    position: relative; /* 今の位置を基準 */
+    margin: 0px;
+    left: 580px;
+    width: 340px;
+    border:none;
+    text-align: center;
+    color:black;
+}
+
+#registration-form{
+    text-decoration: underline;
+}
+
+#register{
+    position: relative; /* 今の位置を基準 */
+    margin: 0px;
+    top: 50px;
+    left: 715px;
+}
+
+#registrationDialog div {
+    margin: 20px;
+   
+}
+
+
+input[type="text"],input[type="date"]{
+  
+    color:black; /* ここで入力された文字の色を設定 */
+    border: 1px solid black; /* 枠線の色も変更 */
+    background-color: #F5F5F5;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px); /* パディングとボーダーを考慮して幅を設定 */
+    
+    
+}
+
+input[type="file"]{
+    color:#4169e1; /* ここで入力された文字の色を設定 */
+    border: 1px solid black; /* 枠線の色も変更 */
+    background-color: #F5F5F5;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px); /* パディングとボーダーを考慮して幅を設定 */
+}
+input[type="text"]::placeholder {
+    color: black; /* プレースホルダーの色 */
+}
+input[type="submit"]{
+    color: black;
+    background-color: #FFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px; /* ボタンを丸くする */
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+input[type="submit"]:hover {
+    background-color: #4169e1; /* ホバー時の背景色 */
+}

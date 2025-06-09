@@ -1,0 +1,159 @@
+/* /ここからハンバーガーメニュー/ */
+.headerMenu {
+    text-align: center;
+    color: #FFFF;
+    text-shadow: 1px 1px 1px black;
+    padding: 17px;
+    width: 100%;
+    position: fixed;
+}
+
+.menuIcon {
+    width: 97%;
+    position: relative;
+}
+
+.hamburgerMenu {
+    position: absolute;
+    height: 3.5em;
+    width: 2em;
+    top: 1em;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.hamburgerBar {
+    opacity: 1;
+    height: 0.25em;
+    width: 2.5em;
+    background-color: white;
+    box-shadow: 1px 1px 0 skyblue,
+        1px -1px 0 skyblue,
+        -1px 1px 0 skyblue,
+        -1px -1px 0 skyblue;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.25s ease-in-out;
+}
+
+.hb1 {
+    top: 25%;
+}
+
+.hb2 {
+    top: 50%;
+    z-index: 100;
+}
+
+.hb3 {
+    top: 75%;
+}
+
+.menuOpen .hb1 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.menuOpen .hb2 {
+    height: 0.3em;
+    width: 0.3em;
+    background-color: white;
+    box-shadow: 1px 0px 0 white,
+        -1px 0px 0 white,
+        0px 1px 0 white,
+        0px -1px 0 white;
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.menuOpen .hb3 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(225deg);
+}
+
+.menuList {
+    pointer-events: auto;
+    width: 25%;
+    height: 100%;
+    z-index: 50;
+    padding: 5em 5em 0em 0em;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    background-color: skyblue;
+    transition: 0.25s ease-in-out;
+    font-size: 125%;
+    color: black;
+}
+
+.menuOpen .menuList {
+    left: 75%;
+    box-shadow: -1px 0 1em rgba(0, 0, 0, 0.5);
+}
+
+/* ここまでハンバーガーメニュー */
+
+/* ここからボディー */
+* {
+    margin: 0px;
+}
+
+.title {
+    font-size: 50px;
+}
+
+/* header{
+    background-color: #8E5DB5;
+    text-align: center;
+    color: #FFFF;
+    text-shadow: 1px 1px 1px black;
+    padding: 35px;
+} */
+
+body {
+    text-align: center;
+    background-image: url('../img/bodyBack.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    font-size: 5em;
+    padding: 50px;
+    font-weight: bold;
+    text-align: center;
+    color: #000;
+    text-shadow: 1px 1px 0 #FFF, -1px -1px 0 #FFF,
+        -1px 1px 0 #FFF, 1px -1px 0 #FFF,
+        0px 1px 0 #FFF, 0-1px 0 #FFF,
+        -1px 0 0 #FFF, 1px 0 0 #FFF;
+}
+
+.h2 {
+    font-size: 2.5em;
+    padding: 50px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 0 #FFF, -1px -1px 0 #FFF,
+        -1px 1px 0 #FFF, 1px -1px 0 #FFF,
+        0px 1px 0 #FFF, 0-1px 0 #FFF,
+        -1px 0 0 #FFF, 1px 0 0 #FFF;
+}
+
+.SavingsStatus {
+    font-size: 1.7em;
+    margin: -70px;
+    padding: 50px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 0 #FFF, -1px -1px 0 #FFF,
+        -1px 1px 0 #FFF, 1px -1px 0 #FFF,
+        0px 1px 0 #FFF, 0-1px 0 #FFF,
+        -1px 0 0 #FFF, 1px 0 0 #FFF;
+}
+
+.echo {
+    font-weight: bold;
+    font-size: 1.1em;
+}

@@ -1,0 +1,215 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    margin: 0;
+    height: 100vh; /* Thay đổi chiều cao của body */
+    overflow: hidden; /* Ẩn cuộn trang */
+}
+header {
+    background-color: #8E5DB5;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+ /* /ここからハンバーガーメニュー/ / */
+.headerMenu {
+    text-align: center;
+    color: #FFFF;
+    text-shadow: 1px 1px 1px black;
+    padding: 17px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.menuIcon {
+    width: 97%;
+    position: relative;
+}
+
+.hamburgerMenu {
+    position: absolute;
+    height: 3.5em;
+    width: 2em;
+    top: 1em;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.hamburgerBar {
+    opacity: 1;
+    height: 0.25em;
+    width: 2.5em;
+    background-color: white;
+    box-shadow: 1px 1px 0 skyblue,
+        1px -1px 0 skyblue,
+        -1px 1px 0 skyblue,
+        -1px -1px 0 skyblue;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.25s ease-in-out;
+}
+
+.hb1 {
+    top: 25%;
+}
+
+.hb2 {
+    top: 50%;
+    z-index: 100;
+}
+
+.hb3 {
+    top: 75%;
+}
+
+.menuOpen .hb1 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.menuOpen .hb2 {
+    height: 0.3em;
+    width: 0.3em;
+    background-color: white;
+    box-shadow: 1px 0px 0 white,
+        -1px 0px 0 white,
+        0px 1px 0 white,
+        0px -1px 0 white;
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.menuOpen .hb3 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(225deg);
+}
+
+.menuList {
+    size : 2em;
+    pointer-events: auto;
+    width: 60%;
+    height: 100%;
+    z-index: 50;
+    padding: 5em 0;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    background-color: skyblue;
+    transition: 0.25s ease-in-out;
+    font-size: 100%;
+    color: #8E5DB5;
+    overflow-y: auto; 
+    white-space: nowrap; 
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.menuOpen .menuList {
+    left: 75%;
+    box-shadow: -1px 0 1em rgba(0, 0, 0, 0.5);
+}
+
+.menuList ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menuList li {
+    margin: 10px 0;
+}
+
+.menuList a {
+    color: #8E5DB5;
+    text-decoration: none;
+    display: block;
+    padding: 0;
+    background-color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.menuList a:hover {
+    background-color: #e0e0e0;
+}
+/* / ここまでハンバーガーメニュー */ 
+
+h1 {
+    margin-bottom: 20px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 40px);
+    
+}
+
+.main-contents {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.content h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #8E5DB5;
+}
+
+hr {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-item {
+    margin-bottom: 15px;
+}
+#status {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+.submit {
+    text-align: center;
+    margin-top: 10px;
+}
+#submit {
+    background-color: #8E5DB5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+
+}
+
+#submit:hover {
+    background-color: #7a4a9f;
+}

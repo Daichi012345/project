@@ -1,0 +1,108 @@
+
+/* styles/common.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color:  #8E5DB5;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.main-contents {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.feedback-item {
+    background-color: #fafafa;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.feedback-item h2 {
+    font-size: 1.2em;
+    color:  #8E5DB5;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+textarea.error {
+    border: 1px solid red;
+}
+
+#rating.error label {
+    color: red;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+label {
+    font-weight: bold;
+}
+/* 
+#rating input[type="radio"] {
+    display: none;
+}
+
+#rating label {
+    color: #f28282;
+    font-size: 1.5em;
+    padding: 0 5px;
+}
+
+#rating input[type="radio"]:checked ~ label {
+    color: #f39c12;
+} */
+.star {
+    color: #d3d3d3; /* Màu xám cho các ngôi sao trống */
+    font-size: 20px;
+}
+
+.star.filled {
+    color: gold; /* Màu vàng cho các ngôi sao đã đánh giá */
+}
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+@media (max-width: 600px) {
+    .main-contents {
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+    }
+}
