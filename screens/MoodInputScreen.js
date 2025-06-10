@@ -13,6 +13,8 @@ import { UserContext } from '../contexts/UserContext';
 
 import { getRecipeKeywordFromGPT, translateRecipeName } from '../utils/openai';
 import { searchRecipeByName } from '../utils/spoonacular';
+import { classifyMoodToGenre } from '../utils/openai';
+
 
 export default function MoodInputScreen() {
   const [userInput, setUserInput] = useState('');
@@ -29,7 +31,15 @@ export default function MoodInputScreen() {
     setLoading(true);
 
     try {
-      const keyword = await getRecipeKeywordFromGPT(userInput);
+      const allergyList = user?.allergy?.split(',').map(a => a.trim()) || [];
+      console.log('アレルギー:', allergyList);
+
+      // 🔄 修正ここから！
+      const { genre, reason } = await classifyMoodToGenre(userInput);
+      console.log('分類されたジャンル:', genre);
+      console.log('理由:', reason);
+
+      const keyword = await getRecipeKeywordFromGPT(genre, allergyList);
       console.log('GPT生成料理名:', keyword);
 
       const recipe = await searchRecipeByName(keyword);
@@ -45,19 +55,21 @@ export default function MoodInputScreen() {
         name: jpName,
       };
 
-      console.log('🔁 MealSuggestionScreenに渡すレシピ:', recipeWithJP);
-      console.log('📦 渡すユーザー:', user); // ここも正しく表示されるようになる
-
       navigation.navigate('MealSuggestionScreen', {
         meal: recipeWithJP,
+        genre,    // 👈 MealSuggestionScreenに渡す
+        reason,   // 👈 MealSuggestionScreenに渡す
       });
     } catch (err) {
-      console.error('提案取得エラー:', err);
+      console.error('提案エラー:', err);
       Alert.alert('エラー', '食事提案の取得に失敗しました');
     } finally {
       setLoading(false);
     }
   };
+
+
+
 
   return (
     <View style={styles.container}>

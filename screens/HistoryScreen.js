@@ -7,15 +7,18 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  Image,
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { UserContext } from '../contexts/UserContext';
 import { API_BASE_URL } from '@env';
+import { translateText } from '../utils/openai';
 
 const FILTERS = ['すべて', '保存のみ', 'お気に入り'];
 
 const HistoryScreen = () => {
   const { user } = useContext(UserContext);
+  const navigation = useNavigation();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('すべて');
@@ -69,6 +72,41 @@ const HistoryScreen = () => {
     ]);
   };
 
+  const translateAndNavigate = async (item) => {
+    try {
+      const translatedSummary = item.summary
+        ? await translateText(item.summary)
+        : '概要なし';
+
+      const translatedInstructions = item.instructions
+        ? await translateText(item.instructions)
+        : '手順情報がありません。';
+
+      const translatedIngredients = item.ingredients && item.ingredients.length > 0
+        ? await Promise.all(item.ingredients.map(i => translateText(i)))
+        : [];
+
+      navigation.navigate('RecipeDetailScreen', {
+        name: item.meal || 'レシピ名不明',
+        summary: translatedSummary,
+        instructions: translatedInstructions,
+        ingredients: translatedIngredients,
+        servings: 2, // ← 🔥 ここを追加！
+      });
+    } catch (err) {
+      console.error('翻訳エラー:', err);
+      navigation.navigate('RecipeDetailScreen', {
+        name: item.meal || 'レシピ名不明',
+        summary: '概要を取得できませんでした。',
+        instructions: '手順情報を取得できませんでした。',
+        ingredients: [],
+        servings: 2, // ← fallbackにも入れておく
+      });
+    }
+  };
+
+
+
   const filteredHistory = history.filter((item) => {
     if (filter === 'すべて') return true;
     if (filter === '保存のみ') return item.isFavorite === false;
@@ -99,20 +137,27 @@ const HistoryScreen = () => {
           data={filteredHistory}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
-            <View style={styles.card}>
-              <Text style={styles.meal}>🍽️ {item.meal}</Text>
-              <Text style={styles.detail}>気分：{item.mood}</Text>
-              <Text style={styles.detail}>お気に入り：{item.isFavorite ? '✅' : '—'}</Text>
-              <Text style={styles.detail}>
-                日時：{new Date(item.createdAt).toLocaleString()}
-              </Text>
-              <TouchableOpacity
-                onPress={() => handleDelete(item._id)}
-                style={styles.deleteButton}
-              >
-                <Text style={styles.deleteText}>削除</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => translateAndNavigate(item)}>
+              <View style={styles.card}>
+                {item.image ? (
+                  <Image source={{ uri: item.image }} style={styles.image} />
+                ) : (
+                  <Text style={styles.noImage}>画像なし</Text>
+                )}
+                <Text style={styles.meal}>🍽️ {item.meal}</Text>
+                <Text style={styles.detail}>気分：{item.mood}</Text>
+                <Text style={styles.detail}>お気に入り：{item.isFavorite ? '✅' : '—'}</Text>
+                <Text style={styles.detail}>
+                  日時：{new Date(item.createdAt).toLocaleString()}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => handleDelete(item._id)}
+                  style={styles.deleteButton}
+                >
+                  <Text style={styles.deleteText}>削除</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           )}
         />
       )}
@@ -143,6 +188,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 12,
   },
+  image: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 8,
+  },
+  noImage: { textAlign: 'center', color: '#888', marginBottom: 8 },
   meal: { fontSize: 18, fontWeight: 'bold', marginBottom: 4 },
   detail: { fontSize: 14, color: '#555' },
   deleteButton: {

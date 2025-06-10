@@ -3,23 +3,35 @@ import axios from 'axios';
 const SPOONACULAR_API_KEY = '6e16f00bf7cb4232834000bcc58bb787';
 
 export const searchRecipeByName = async (query) => {
-  try {
-    // Step 1: Get ID from complexSearch
+  const trySearch = async (q) => {
     const searchRes = await axios.get(
       'https://api.spoonacular.com/recipes/complexSearch',
       {
         params: {
           apiKey: SPOONACULAR_API_KEY,
-          query,
+          query: q,
           number: 1,
         },
       }
     );
 
-    const recipe = searchRes.data.results[0];
+    return searchRes.data.results?.[0] || null;
+  };
+
+  try {
+    // Step 1: 通常の検索
+    let recipe = await trySearch(query);
+
+    // Step 2: ヒットしなければ、最後の単語でフォールバック検索
+    if (!recipe) {
+      const fallbackKeyword = query.split(' ').slice(-1)[0];
+      console.log('🔁 フォールバック検索中:', fallbackKeyword);
+      recipe = await trySearch(fallbackKeyword);
+    }
+
     if (!recipe) throw new Error('レシピが見つかりません');
 
-    // Step 2: Get full details by ID
+    // Step 3: 詳細取得
     const detailRes = await axios.get(
       `https://api.spoonacular.com/recipes/${recipe.id}/information`,
       {

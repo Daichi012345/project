@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { UserContext } from './contexts/UserContext';
 
+
 import HomeScreen from './screens/HomeScreen';
 import MoodInputScreen from './screens/MoodInputScreen';
 import MealSuggestionScreen from './screens/MealSuggestionScreen';
@@ -53,6 +54,7 @@ export default function App() {
           <RootStack.Screen name="RegisterScreen" component={RegisterScreen} />
           <RootStack.Screen name="Login" component={LoginScreen} />
           <RootStack.Screen name="MainTabs" component={MainTabs} />
+          <RootStack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} />
         </RootStack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>

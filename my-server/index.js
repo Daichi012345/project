@@ -128,14 +128,27 @@ app.get('/api/recommend/:userId', async (req, res) => {
 
 
 app.post('/api/recommend', async (req, res) => {
-  const { userId, meal, mood, isFavorite = false } = req.body; // ← デフォルト値を設定
+  const {
+    userId,
+    meal,
+    mood,
+    isFavorite = false,
+    image,
+    summary,
+    instructions,
+    ingredients
+  } = req.body;
 
   try {
     const newRecommendation = new Recommendation({
       userId,
       meal,
       mood,
-      isFavorite
+      isFavorite,
+      image,
+      summary,
+      instructions,
+      ingredients
     });
 
     await newRecommendation.save();
@@ -145,6 +158,8 @@ app.post('/api/recommend', async (req, res) => {
     res.status(500).json({ message: '保存失敗' });
   }
 });
+
+
 
 
 app.get('/api/recommend/:userId', async (req, res) => {
@@ -166,6 +181,40 @@ app.delete('/api/recommend/:id', async (req, res) => {
   } catch (err) {
     console.error('❌ 削除失敗:', err);
     res.status(500).json({ message: '削除失敗' });
+  }
+});
+
+// ユーザー情報更新API（PATCH）
+app.patch('/api/user/:id', async (req, res) => {
+  const userId = req.params.id;
+  const { name, email, age, gender, allergy } = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name, email, age, gender, allergy },
+      { new: true } // 更新後のデータを返す
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'ユーザーが見つかりません' });
+    }
+
+    const userWithoutPassword = {
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      age: updatedUser.age,
+      gender: updatedUser.gender,
+      allergy: updatedUser.allergy,
+      createdAt: updatedUser.createdAt
+    };
+
+    res.json({ message: '更新成功', user: userWithoutPassword });
+
+  } catch (error) {
+    console.error('❌ ユーザー更新エラー:', error);
+    res.status(500).json({ message: '更新中にエラーが発生しました' });
   }
 });
 

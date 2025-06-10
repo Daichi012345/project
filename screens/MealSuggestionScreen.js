@@ -17,9 +17,28 @@ import { UserContext } from '../contexts/UserContext';
 export default function MealSuggestionScreen() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { meal } = route.params || {};
+  const { meal, genre, reason } = route.params || {}; // ← 修正ここ！
+
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+
+  const hasAllergen = (ingredients, allergyList) => {
+    return ingredients?.some(ingredient =>
+      allergyList.some(allergen =>
+        ingredient.toLowerCase().includes(allergen.toLowerCase())
+      )
+    );
+  };
+
+  const allergyList = user?.allergy?.split(',').map(a => a.trim()) || [];
+
+  if (hasAllergen(meal.ingredients, allergyList)) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>この料理には登録されたアレルゲンが含まれています</Text>
+      </View>
+    );
+  }
 
   useEffect(() => {
     const saveToHistory = async () => {
@@ -31,8 +50,12 @@ export default function MealSuggestionScreen() {
           body: JSON.stringify({
             userId: user._id,
             meal: meal.name,
-            mood: meal.mood || '未設定',
+            mood: genre || '未設定',
             isFavorite: false,
+            image: meal.image,
+            instructions: meal.instructions,
+            summary: meal.summary,
+            ingredients: meal.ingredients,
           }),
         });
         console.log('✅ 自動保存成功');
@@ -57,8 +80,12 @@ export default function MealSuggestionScreen() {
         body: JSON.stringify({
           userId: user._id,
           meal: meal.name,
-          mood: meal.mood || '未設定',
+          mood: genre || '未設定',
           isFavorite,
+          image: meal.image,
+          instructions: meal.instructions,
+          summary: meal.summary,
+          ingredients: meal.ingredients,
         }),
       });
 
@@ -126,6 +153,10 @@ export default function MealSuggestionScreen() {
 
       <Text style={styles.mealName}>{meal.name}</Text>
 
+      {/* 🔽 追加表示：ジャンルと理由 */}
+      {genre && <Text style={styles.genre}>提案ジャンル：{genre}</Text>}
+      {reason && <Text style={styles.reason}>選んだ理由：{reason}</Text>}
+
       <View style={styles.nutritionCard}>
         <Text style={styles.nutritionTitle}>栄養成分（1食あたり）</Text>
         <View style={styles.nutritionItem}>
@@ -179,7 +210,11 @@ const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginTop: 12, marginBottom: 16 },
   noImage: { textAlign: 'center', color: '#999', marginBottom: 20 },
   image: { width: '100%', height: 200, borderRadius: 16, marginBottom: 16 },
-  mealName: { fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: 20 },
+  mealName: { fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: 8 },
+
+  genre: { fontSize: 16, fontWeight: '600', textAlign: 'center', color: '#555', marginBottom: 4 },
+  reason: { fontSize: 14, textAlign: 'center', color: '#777', marginBottom: 16, paddingHorizontal: 20 },
+
   nutritionCard: {
     backgroundColor: '#f8f8f8',
     padding: 16,
