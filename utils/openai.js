@@ -24,7 +24,9 @@ ${allergyList.map(allergen => {
 ユーザーが次のような気分・体調を入力しました：
 "${userInputText}"
 
-この内容に合った **主食または主菜としてふさわしい料理** を1つだけ、Spoonacularに登録されていそうな英語の料理名（例：Grilled Chicken Salad）で提案してください。
+この内容に合った **主食または主菜としてふさわしい、見た目もおいしそうな料理** を1つだけ、Spoonacularに登録されていそうな英語の料理名（例：Grilled Chicken Salad）で提案してください。
+例：Ramen、Grilled Chicken Salad、Beef Stir-Fry
+ユニークすぎる料理名（例：Fusion料理、オリジナル風料理名）は避けてください。
 
 ${allergyText}
 
@@ -93,6 +95,66 @@ export const classifyMoodToGenre = async (userInputText) => {
     genre: genreMatch ? genreMatch[1] : '不明',
     reason: reasonMatch ? reasonMatch[1] : '理由が取得できませんでした',
   };
+};
+
+
+const handleSubmit = async () => {
+  if (!userInput.trim()) {
+    Alert.alert('入力エラー', '気分や体調を入力してください');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const allergyList = user?.allergy?.split(',').map(a => a.trim()) || [];
+    console.log('アレルギー:', allergyList);
+
+    // ジャンル分類
+    const { genre, reason } = await classifyMoodToGenre(userInput);
+    console.log('分類されたジャンル:', genre);
+    console.log('理由:', reason);
+
+    // GPTに料理名リクエスト
+    let keyword = await getRecipeKeywordFromGPT(genre, allergyList);
+    console.log('GPT生成料理名:', keyword);
+
+    // Spoonacular検索
+    let recipe = await searchRecipeByName(keyword);
+
+    // 見つからなかったら再依頼
+    if (!recipe) {
+      console.log('Spoonacular に見つからなかったので、GPT に別候補を再依頼');
+      keyword = await getRecipeKeywordFromGPT(userInput, allergyList);
+      console.log('再提案料理名:', keyword);
+      recipe = await searchRecipeByName(keyword);
+
+      if (!recipe) {
+        Alert.alert('該当するレシピが見つかりません', '別の気分や条件で再度お試しください。');
+        return;
+      }
+    }
+
+    // 日本語に翻訳
+    const jpName = await translateRecipeName(recipe.name);
+
+    const recipeWithJP = {
+      ...recipe,
+      name: jpName,
+      mood: genre,
+      reason: reason,
+    };
+
+    navigation.navigate('MealSuggestionScreen', {
+      meal: recipeWithJP,
+    });
+
+  } catch (err) {
+    console.error('提案エラー:', err);
+    Alert.alert('エラー', '提案の取得に失敗しました');
+  } finally {
+    setLoading(false);
+  }
 };
 
 
