@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { UserContext } from './contexts/UserContext';
 
-
 import HomeScreen from './screens/HomeScreen';
 import MoodInputScreen from './screens/MoodInputScreen';
 import MealSuggestionScreen from './screens/MealSuggestionScreen';
@@ -24,21 +23,26 @@ const Tab = createBottomTabNavigator();
 function HomeStack() {
   return (
     <MainStack.Navigator>
-      <MainStack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'トップ' }} />
-      <MainStack.Screen name="MoodInputScreen" component={MoodInputScreen} />
-      <MainStack.Screen name="MealSuggestionScreen" component={MealSuggestionScreen} />
-      <MainStack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} />
+      <MainStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
+      <MainStack.Screen name="MoodInputScreen" component={MoodInputScreen}  options={{ headerShown: false }}/>
+      <MainStack.Screen name="MealSuggestionScreen" component={MealSuggestionScreen}  options={{ headerShown: false }} />
+      <MainStack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen}  options={{ headerShown: false }} />
     </MainStack.Navigator>
   );
 }
 
 function MainTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'ホーム' }} />
-      <Tab.Screen name="HistoryScreen" component={HistoryScreen} options={{ title: '履歴' }} />
-      <Tab.Screen name="ExerciseInput" component={ExerciseInputScreen} options={{ title: '運動入力' }} />
-      <Tab.Screen name="MyPage" component={MyPageScreen} options={{ title: 'マイページ' }} />
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,   
+        tabBarShowLabel: true,   
+      }}
+    >
+      <Tab.Screen name="HomeTab" component={HomeStack}  options={{ tabBarLabel: 'ホーム' }}/>
+      <Tab.Screen name="HistoryScreen" component={HistoryScreen} options={{ tabBarLabel: '履歴' }} />
+      <Tab.Screen name="ExerciseInput" component={ExerciseInputScreen}  options={{ tabBarLabel: '運動入力' }} />
+      <Tab.Screen name="MyPage" component={MyPageScreen} options={{ tabBarLabel: 'マイページ' }} />
     </Tab.Navigator>
   );
 }

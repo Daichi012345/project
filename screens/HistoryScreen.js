@@ -14,7 +14,7 @@ import { UserContext } from '../contexts/UserContext';
 import { API_BASE_URL } from '@env';
 import { translateText } from '../utils/openai';
 
-const FILTERS = ['すべて', '保存のみ', 'お気に入り'];
+const FILTERS = ['すべて', 'お気に入り'];
 
 const HistoryScreen = () => {
   const { user } = useContext(UserContext);
@@ -91,7 +91,7 @@ const HistoryScreen = () => {
         summary: translatedSummary,
         instructions: translatedInstructions,
         ingredients: translatedIngredients,
-        servings: 2, // ← 🔥 ここを追加！
+        servings: 2, 
       });
     } catch (err) {
       console.error('翻訳エラー:', err);
@@ -100,16 +100,13 @@ const HistoryScreen = () => {
         summary: '概要を取得できませんでした。',
         instructions: '手順情報を取得できませんでした。',
         ingredients: [],
-        servings: 2, // ← fallbackにも入れておく
+        servings: 2, 
       });
     }
   };
 
-
-
   const filteredHistory = history.filter((item) => {
     if (filter === 'すべて') return true;
-    if (filter === '保存のみ') return item.isFavorite === false;
     if (filter === 'お気に入り') return item.isFavorite === true;
     return true;
   });
@@ -166,45 +163,85 @@ const HistoryScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 12, textAlign: 'center' },
-  tabRow: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 16 },
+  container: { flex: 1, backgroundColor: '#FAF9F6', padding: 20 },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginTop: 40,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#4E342E',
+  },
+  tabRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+  },
   tabButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    backgroundColor: '#eee',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    backgroundColor: '#E0E0E0',
   },
   activeTab: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#81C784',
   },
   tabText: {
     color: '#333',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontSize: 15,
   },
   card: {
-    backgroundColor: '#F0F0F0',
-    padding: 16,
-    borderRadius: 10,
-    marginBottom: 12,
+    backgroundColor: '#FFFFFF',
+    padding: 18,
+    borderRadius: 16,
+    marginBottom: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   image: {
     width: '100%',
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 8,
+    height: 160,
+    borderRadius: 14,
+    marginBottom: 10,
   },
-  noImage: { textAlign: 'center', color: '#888', marginBottom: 8 },
-  meal: { fontSize: 18, fontWeight: 'bold', marginBottom: 4 },
-  detail: { fontSize: 14, color: '#555' },
+  noImage: {
+    textAlign: 'center',
+    color: '#999',
+    marginBottom: 10,
+  },
+  meal: {
+    fontSize: 19,
+    fontWeight: '600',
+    color: '#3E2723',
+    marginBottom: 6,
+  },
+  detail: {
+    fontSize: 14,
+    color: '#5D4037',
+    marginBottom: 2,
+  },
   deleteButton: {
-    backgroundColor: '#FF6347',
-    padding: 6,
-    borderRadius: 6,
-    marginTop: 10,
+    backgroundColor: '#FF7043',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    marginTop: 12,
     alignSelf: 'flex-end',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
-  deleteText: { color: '#fff', fontWeight: 'bold' },
+  deleteText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
+  },
 });
 
 export default HistoryScreen;

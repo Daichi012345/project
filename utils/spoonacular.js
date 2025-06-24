@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const SPOONACULAR_API_KEY = '6e16f00bf7cb4232834000bcc58bb787';
 
-export const searchRecipeByName = async (query) => {
+export const searchRecipeByName = async (query, allergyList = []) => {
   const trySearch = async (q) => {
     const searchRes = await axios.get(
       'https://api.spoonacular.com/recipes/complexSearch',
@@ -19,10 +19,8 @@ export const searchRecipeByName = async (query) => {
   };
 
   try {
-    // Step 1: 通常の検索
     let recipe = await trySearch(query);
 
-    // Step 2: ヒットしなければ、最後の単語でフォールバック検索
     if (!recipe) {
       const fallbackKeyword = query.split(' ').slice(-1)[0];
       console.log('🔁 フォールバック検索中:', fallbackKeyword);
@@ -31,7 +29,6 @@ export const searchRecipeByName = async (query) => {
 
     if (!recipe) throw new Error('レシピが見つかりません');
 
-    // Step 3: 詳細取得
     const detailRes = await axios.get(
       `https://api.spoonacular.com/recipes/${recipe.id}/information`,
       {
@@ -47,6 +44,16 @@ export const searchRecipeByName = async (query) => {
     const get = (name) =>
       detail.nutrition?.nutrients?.find((n) => n.name === name) || {};
 
+    const ingredients = detail.extendedIngredients?.map(i => i.original) || [];
+
+    for (const allergen of allergyList) {
+      const lowerAllergen = allergen.toLowerCase();
+      if (ingredients.some(ing => ing.toLowerCase().includes(lowerAllergen))) {
+        console.log(`⚠️ アレルゲン「${allergen}」含むためレシピ除外`);
+        return null;
+      }
+    }
+
     return {
       id: detail.id,
       name: detail.title,
@@ -55,7 +62,7 @@ export const searchRecipeByName = async (query) => {
       instructions: detail.analyzedInstructions?.[0]?.steps
         ?.map((step) => step.step)
         .join('\n') || '手順情報がありません。',
-      ingredients: detail.extendedIngredients?.map(i => i.original) || [],
+      ingredients,
       nutrition: {
         calories: Math.round(get('Calories')?.amount || 0),
         protein: Math.round(get('Protein')?.amount || 0),

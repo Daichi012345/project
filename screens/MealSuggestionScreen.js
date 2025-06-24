@@ -17,7 +17,7 @@ import { UserContext } from '../contexts/UserContext';
 export default function MealSuggestionScreen() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { meal, genre, reason } = route.params || {}; // ← 修正ここ！
+  const { meal, genre, reason } = route.params || {};
 
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
@@ -153,9 +153,10 @@ export default function MealSuggestionScreen() {
 
       <Text style={styles.mealName}>{meal.name}</Text>
 
-      {/* 🔽 追加表示：ジャンルと理由 */}
-      {genre && <Text style={styles.genre}>提案ジャンル：{genre}</Text>}
-      {reason && <Text style={styles.reason}>選んだ理由：{reason}</Text>}
+      <View style={styles.reasonCard}>
+        {genre && <Text style={styles.genreText}>🍽️ ジャンル：{genre}</Text>}
+        {reason && <Text style={styles.reasonText}>💡 選んだ理由：{reason}</Text>}
+      </View>
 
       <View style={styles.nutritionCard}>
         <Text style={styles.nutritionTitle}>栄養成分（1食あたり）</Text>
@@ -206,40 +207,128 @@ export default function MealSuggestionScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 16 },
-  title: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginTop: 12, marginBottom: 16 },
-  noImage: { textAlign: 'center', color: '#999', marginBottom: 20 },
-  image: { width: '100%', height: 200, borderRadius: 16, marginBottom: 16 },
-  mealName: { fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: 8 },
-
-  genre: { fontSize: 16, fontWeight: '600', textAlign: 'center', color: '#555', marginBottom: 4 },
-  reason: { fontSize: 14, textAlign: 'center', color: '#777', marginBottom: 16, paddingHorizontal: 20 },
-
+  container: {
+    flex: 1,
+    backgroundColor: '#FAF9F6',
+  },
+  scrollContent: {
+    padding: 20,
+    paddingBottom: 40,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginTop: 60,
+    color: '#4E342E',
+    marginVertical: 16,
+    textAlign: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 16,
+    marginBottom: 16,
+  },
+  noImage: {
+    color: '#999',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  mealName: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#3E2723',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  reasonCard: {
+    backgroundColor: '#E0F7FA',
+    padding: 14,
+    borderRadius: 14,
+    width: '100%',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  genreText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#00796B',
+    marginBottom: 6,
+  },
+  reasonText: {
+    fontSize: 14,
+    color: '#004D40',
+    lineHeight: 20,
+  },
   nutritionCard: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#FFFFFF',
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 14,
+    width: '100%',
     marginBottom: 24,
-    marginHorizontal: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 4,
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
   },
-  nutritionTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 12, color: '#333', textAlign: 'center' },
-  nutritionItem: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 4 },
-  nutritionLabel: { fontSize: 14, color: '#555' },
-  nutritionValue: { fontSize: 16, fontWeight: 'bold', color: '#333' },
-  buttonRow: { flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: 20 },
+  nutritionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  nutritionItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 4,
+  },
+  nutritionLabel: {
+    fontSize: 14,
+    color: '#555',
+  },
+  nutritionValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
   button: {
     flex: 1,
     paddingVertical: 14,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
-    marginHorizontal: 8,
+    marginHorizontal: 6,
   },
-  saveButton: { backgroundColor: '#4CAF50' },
-  favoriteButton: { backgroundColor: '#FFA500' },
-  buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  saveButton: {
+    backgroundColor: '#81C784',
+  },
+  favoriteButton: {
+    backgroundColor: '#FFD54F',
+  },
+  recipeButton: {
+    backgroundColor: '#4FC3F7',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 8,
+    width: '100%',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
+

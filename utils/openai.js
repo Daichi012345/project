@@ -1,47 +1,79 @@
 import axios from 'axios';
-import { OPENAI_API_KEY } from '@env'; // ← ここで読み込む
+import { OPENAI_API_KEY } from '@env';
+import { getSuggestionCache, saveSuggestionCache } from './suggestionCache';
 
 const GPT_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
+const GPT_MODEL = 'gpt-4o';
 
-
-export const getRecipeKeywordFromGPT = async (userInputText, allergyList = []) => {
-  const allergyText = allergyList.length > 0
-    ? `※以下の食材は絶対に含まないでください（これらが含まれる料理は無効です）：${allergyList.join(', ')}
-
-また、可能であれば以下の代替食材を使った料理を提案してください：
-
-${allergyList.map(allergen => {
-      if (allergen.includes('乳') || allergen.includes('牛乳')) return '牛乳 → 豆乳やアーモンドミルク';
-      if (allergen.includes('卵')) return '卵 → 豆腐やアクアファバ';
-      if (allergen.includes('小麦')) return '小麦 → 米粉やオートミール';
-      if (allergen.includes('ナッツ')) return 'ナッツ → ひまわりの種やかぼちゃの種';
-      if (allergen.includes('いちご')) return 'いちご → 他の果物（例：バナナ、りんご）';
-      return `${allergen} の代わりに安全な食材`;
-    }).join('\n')}`
-    : '';
-
+/**
+  気分・体調に応じたジャンル分類
+ **/
+export const classifyMoodToGenre = async (userInputText) => {
   const prompt = `
-ユーザーが次のような気分・体調を入力しました：
-"${userInputText}"
+あなたは食事提案AIです。
+以下の気分・体調に対して、以下2つを日本語で出力してください：
 
-この内容に合った **主食または主菜としてふさわしい、見た目もおいしそうな料理** を1つだけ、Spoonacularに登録されていそうな英語の料理名（例：Grilled Chicken Salad）で提案してください。
-例：Ramen、Grilled Chicken Salad、Beef Stir-Fry
-ユニークすぎる料理名（例：Fusion料理、オリジナル風料理名）は避けてください。
+1. 料理ジャンル（例：辛いもの、さっぱり、エネルギー系、濃い味、ヘルシー など）
+2. そのジャンルを選んだ理由（簡潔に1文）
 
-${allergyText}
+出力形式：
+ジャンル: ○○○
+理由: ○○○○○○○○○○○○
 
-※以下のようなジャンルは除外してください：お菓子、スイーツ、デザート、飲み物、軽食。
-
-返答は、アレルギー食材を一切含まない「主食・主菜レベルの料理名」のみとしてください。
-料理名のみ。他の説明や記号は不要です。
+気分・体調: "${userInputText}"
 `;
 
   const res = await axios.post(
-    'https://api.openai.com/v1/chat/completions',
+    GPT_ENDPOINT,
     {
-      model: 'gpt-3.5-turbo',
+      model: GPT_MODEL,
       messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
+      temperature: 0.5,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+    }
+  );
+
+  const text = res.data.choices[0].message.content.trim();
+  const genreMatch = text.match(/ジャンル[:：]\s*(.+)/);
+  const reasonMatch = text.match(/理由[:：]\s*(.+)/);
+
+  return {
+    genre: genreMatch ? genreMatch[1] : '不明',
+    reason: reasonMatch ? reasonMatch[1] : '理由が取得できませんでした',
+  };
+};
+
+/**
+ 料理名提案（ジャンル・気分・アレルギー考慮）
+ **/
+export const getRecipeKeywordFromGPT = async (genreText, userInputText, allergyList = []) => {
+  const allergyText = allergyList.length > 0
+    ? `※以下の食材は絶対に含まないでください：${allergyList.join(', ')}`
+    : '';
+
+  const prompt = `
+あなたは料理提案AIです。
+次の条件を考慮し、Spoonacularに登録されていそうな主食または主菜レベルの料理名（英語のみ、例：Grilled Chicken Salad、Beef Stir-Fry）を1つだけ提案してください。
+創作風・ユニークすぎる名前は禁止。スイーツ・デザート・軽食・飲み物は禁止。
+
+気分・体調: ${userInputText}
+希望ジャンル: ${genreText}
+${allergyText}
+
+料理名のみ返答してください。他の説明や記号は禁止です。
+`;
+
+  const res = await axios.post(
+    GPT_ENDPOINT,
+    {
+      model: GPT_MODEL,
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.5,
     },
     {
       headers: {
@@ -54,127 +86,16 @@ ${allergyText}
   return res.data.choices[0].message.content.trim();
 };
 
-// ④ 気分テキストをジャンル分類（例：辛いもの、さっぱり系、エネルギー系）
-export const classifyMoodToGenre = async (userInputText) => {
-  const prompt = `
-あなたは食事提案AIです。
-以下の気分・体調に対して、以下2つを日本語で出力してください：
-
-1. 料理ジャンル（例：辛いもの、甘いもの、さっぱり、エネルギー系、濃い味、ヘルシー など）
-2. そのジャンルを選んだ理由（簡潔に1文）
-
-出力形式は次の通りです：
-ジャンル: ○○○
-理由: ○○○○○○○○○○○○
-
-気分・体調: "${userInputText}"
-`;
-
-  const res = await axios.post(
-    GPT_ENDPOINT,
-    {
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-      },
-    }
-  );
-
-  const text = res.data.choices[0].message.content.trim();
-
-  // 正規表現でパース
-  const genreMatch = text.match(/ジャンル[:：]\s*(.+)/);
-  const reasonMatch = text.match(/理由[:：]\s*(.+)/);
-
-  return {
-    genre: genreMatch ? genreMatch[1] : '不明',
-    reason: reasonMatch ? reasonMatch[1] : '理由が取得できませんでした',
-  };
-};
-
-
-const handleSubmit = async () => {
-  if (!userInput.trim()) {
-    Alert.alert('入力エラー', '気分や体調を入力してください');
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    const allergyList = user?.allergy?.split(',').map(a => a.trim()) || [];
-    console.log('アレルギー:', allergyList);
-
-    // ジャンル分類
-    const { genre, reason } = await classifyMoodToGenre(userInput);
-    console.log('分類されたジャンル:', genre);
-    console.log('理由:', reason);
-
-    // GPTに料理名リクエスト
-    let keyword = await getRecipeKeywordFromGPT(genre, allergyList);
-    console.log('GPT生成料理名:', keyword);
-
-    // Spoonacular検索
-    let recipe = await searchRecipeByName(keyword);
-
-    // 見つからなかったら再依頼
-    if (!recipe) {
-      console.log('Spoonacular に見つからなかったので、GPT に別候補を再依頼');
-      keyword = await getRecipeKeywordFromGPT(userInput, allergyList);
-      console.log('再提案料理名:', keyword);
-      recipe = await searchRecipeByName(keyword);
-
-      if (!recipe) {
-        Alert.alert('該当するレシピが見つかりません', '別の気分や条件で再度お試しください。');
-        return;
-      }
-    }
-
-    // 日本語に翻訳
-    const jpName = await translateRecipeName(recipe.name);
-
-    const recipeWithJP = {
-      ...recipe,
-      name: jpName,
-      mood: genre,
-      reason: reason,
-    };
-
-    navigation.navigate('MealSuggestionScreen', {
-      meal: recipeWithJP,
-    });
-
-  } catch (err) {
-    console.error('提案エラー:', err);
-    Alert.alert('エラー', '提案の取得に失敗しました');
-  } finally {
-    setLoading(false);
-  }
-};
-
-
-
-
-
-
-// ② 英語の料理名を日本語に翻訳
+/**
+ 英語の料理名を日本語に翻訳
+ **/
 export const translateRecipeName = async (englishName) => {
-  const prompt = `
-次の料理名を自然な日本語に翻訳してください：
-"${englishName}"
-
-※料理名のみを返してください。他の説明文や記号は不要です。
-`;
+  const prompt = `"${englishName}" を自然な日本語の料理名にしてください。料理名のみ返答。`;
 
   const res = await axios.post(
     GPT_ENDPOINT,
     {
-      model: 'gpt-3.5-turbo',
+      model: GPT_MODEL,
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.3,
     },
@@ -189,14 +110,16 @@ export const translateRecipeName = async (englishName) => {
   return res.data.choices[0].message.content.trim();
 };
 
-// ③ 任意の文章を翻訳
+/**
+ 任意の文章を日本語に翻訳
+ **/
 export const translateText = async (text) => {
   const prompt = `次の英語の文章を自然な日本語に翻訳してください：\n\n${text}`;
 
   const res = await axios.post(
     GPT_ENDPOINT,
     {
-      model: 'gpt-3.5-turbo',
+      model: GPT_MODEL,
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.5,
     },
@@ -209,4 +132,71 @@ export const translateText = async (text) => {
   );
 
   return res.data.choices[0].message.content.trim();
+};
+
+/**
+  提案ハンドリング（検索フロー込み・キャッシュ対応）
+ **/
+export const handleSubmit = async (userInput, user, navigation, setLoading, searchRecipeByName, Alert) => {
+  if (!userInput.trim()) {
+    Alert.alert('入力エラー', '気分や体調を入力してください');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const allergyList = user?.allergy?.split(',').map(a => a.trim()) || [];
+    const cacheKey = `${userInput.trim()}___${allergyList.join(',')}`;
+    const cache = await getSuggestionCache();
+
+    if (cache[cacheKey]) {
+      console.log('✅ キャッシュから即時提案');
+      navigation.navigate('MealSuggestionScreen', { meal: cache[cacheKey] });
+      setLoading(false);
+      return;
+    }
+
+    console.log('🚀 キャッシュなし → 通常処理開始');
+    const { genre, reason } = await classifyMoodToGenre(userInput);
+    console.log('🎨 分類ジャンル:', genre);
+
+    let keyword = await getRecipeKeywordFromGPT(genre, userInput, allergyList);
+    console.log('🍽️ GPT生成料理名:', keyword);
+
+    let recipe = await searchRecipeByName(keyword, allergyList);
+    if (!recipe) {
+      console.log('🔄 再検索（気分・体調のみで再提案）');
+      keyword = await getRecipeKeywordFromGPT('', userInput, allergyList);
+      console.log('🍽️ 再提案料理名:', keyword);
+      recipe = await searchRecipeByName(keyword, allergyList);
+
+      if (!recipe) {
+        Alert.alert('レシピ未発見', '条件を変えて再試行してください。');
+        return;
+      }
+    }
+
+    const jpName = await translateRecipeName(recipe.name);
+    console.log('🇯🇵 日本語訳:', jpName);
+
+    const meal = {
+      ...recipe,
+      name: jpName,
+      mood: genre,
+      reason: reason,
+    };
+
+    cache[cacheKey] = meal;
+    await saveSuggestionCache(cache);
+    console.log('✅ キャッシュ保存完了');
+
+    navigation.navigate('MealSuggestionScreen', { meal });
+
+  } catch (err) {
+    console.error('提案エラー:', err);
+    Alert.alert('エラー', '提案の取得に失敗しました');
+  } finally {
+    setLoading(false);
+  }
 };

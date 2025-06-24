@@ -3,7 +3,7 @@ import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
   KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, Alert
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; // 必要：npm install @react-native-picker/picker
+import { Picker } from '@react-native-picker/picker'; 
 
 const METS = {
   ウォーキング: 3.5,
@@ -87,24 +87,73 @@ export default function ExerciseInputScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, backgroundColor: '#fff', justifyContent: 'center' },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-  label: { fontSize: 16, marginBottom: 6, marginTop: 10 },
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: '#FAF9F6', 
+    paddingTop: 60,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 24,
+    textAlign: 'center',
+    color: '#4E342E',
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 6,
+    marginTop: 12,
+    color: '#5D4037',
+  },
   input: {
-    borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 12,
-    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 14,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   pickerWrapper: {
-    borderWidth: 1, borderColor: '#ccc', borderRadius: 8,
-    marginBottom: 12, overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 14,
+    marginBottom: 14,
+    overflow: 'hidden',
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   button: {
-    backgroundColor: '#4CAF50',
-    padding: 14,
-    borderRadius: 10,
+    backgroundColor: '#81C784', 
+    paddingVertical: 16,
+    borderRadius: 14,
     alignItems: 'center',
-    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+    marginTop: 10,
   },
-  buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  result: { fontSize: 18, textAlign: 'center', marginTop: 10, color: '#333' },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 17,
+  },
+  result: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 16,
+    color: '#3E2723',
+    fontWeight: '600',
+  },
 });

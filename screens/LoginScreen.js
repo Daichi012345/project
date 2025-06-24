@@ -41,7 +41,7 @@ const LoginScreen = ({ navigation }) => {
       if (response.ok && data.user) {
         Alert.alert('ログイン成功', `${data.user.name} さん、ようこそ！`);
         setUser(data.user);
-        navigation.replace('MainTabs'); // ← 戻れなくするため replace を使用
+        navigation.replace('MainTabs'); 
       } else {
         Alert.alert('ログイン失敗', data.message || 'メールまたはパスワードが間違っています');
       }
@@ -92,30 +92,48 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FAF9F6',
     padding: 24,
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 24,
+    marginBottom: 30,
     textAlign: 'center',
+    color: '#4E342E',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
+    borderColor: '#E0E0E0',
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 20,
+    fontSize: 16,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   button: {
-    backgroundColor: '#4CAF50',
-    padding: 16,
-    borderRadius: 10,
+    backgroundColor: '#81C784',
+    paddingVertical: 16,
+    borderRadius: 14,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
+    marginTop: 12,
   },
-  buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
+    fontSize: 17,
+  },
 });
 
 export default LoginScreen;

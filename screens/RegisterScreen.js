@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import { API_BASE_URL } from '@env';
 
-
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -122,45 +121,57 @@ const RegisterScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FAF9F6', 
+    padding: 24,
     justifyContent: 'center',
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 24,
+    marginBottom: 30,
     textAlign: 'center',
-    color: '#333',
+    color: '#4E342E',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 12,
+    borderColor: '#E0E0E0',
+    borderRadius: 14,
     padding: 14,
-    marginBottom: 16,
+    marginBottom: 18,
     fontSize: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   button: {
-    backgroundColor: '#4CAF50',
-    padding: 16,
-    borderRadius: 12,
+    backgroundColor: '#81C784', 
+    paddingVertical: 16,
+    borderRadius: 14,
     alignItems: 'center',
-    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
+    marginTop: 12,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: '#FFFFFF',
+    fontWeight: '600',
     fontSize: 17,
   },
   link: {
-    color: '#007AFF',
-    marginTop: 18,
+    color: '#3B82F6',
+    marginTop: 20,
     textAlign: 'center',
     fontSize: 15,
   },
 });
+
+
 
 export default RegisterScreen;

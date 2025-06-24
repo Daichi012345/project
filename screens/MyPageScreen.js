@@ -40,7 +40,7 @@ const MyPageScreen = ({ navigation }) => {
       }
 
       const data = await response.json();
-      setUser(data.user); // 最新情報を反映
+      setUser(data.user); 
       setIsEditing(false);
       console.log('保存されたアレルギー:', editedUser.allergy);
 
@@ -104,39 +104,96 @@ const MyPageScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20 },
-  infoBox: { marginBottom: 30 },
-  label: { fontSize: 16, fontWeight: 'bold', marginTop: 12 },
-  info: { fontSize: 16, color: '#333' },
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: '#FAF9F6', 
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginTop: 40,
+    textAlign: 'center',
+    marginBottom: 24,
+    color: '#4E342E',
+  },
+  infoBox: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 14,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+    marginBottom: 24,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 10,
+    color: '#5D4037',
+  },
+  info: {
+    fontSize: 16,
+    color: '#3E2723',
+    marginBottom: 6,
+  },
   input: {
     fontSize: 16,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-    paddingVertical: 4,
-    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 4,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 1,
+    elevation: 1,
   },
   editButton: {
-    backgroundColor: '#4682B4',
-    padding: 14,
-    borderRadius: 10,
+    backgroundColor: '#81C784',
+    paddingVertical: 14,
+    borderRadius: 14,
     alignItems: 'center',
-    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+    marginBottom: 12,
   },
   saveButton: {
-    backgroundColor: '#32CD32',
-    padding: 14,
-    borderRadius: 10,
+    backgroundColor: '#4CAF50',
+    paddingVertical: 14,
+    borderRadius: 14,
     alignItems: 'center',
-    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+    marginBottom: 12,
   },
   logoutButton: {
-    backgroundColor: '#FF6347',
-    padding: 14,
-    borderRadius: 10,
+    backgroundColor: '#FF7043',
+    paddingVertical: 14,
+    borderRadius: 14,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
-  logoutText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  logoutText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
+    fontSize: 17,
+  },
 });
 
 export default MyPageScreen;

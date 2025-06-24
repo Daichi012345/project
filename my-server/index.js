@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('./models/User'); // 上のモデルファイルを読み込み
+const User = require('./models/User');
 const Recommendation = require('./models/Recommendation');
 const History = require('./models/History');
 
@@ -46,9 +46,8 @@ app.post('/api/register', async (req, res) => {
 
     await user.save();
 
-    // パスワードを返さないように除外
     const userWithoutPassword = {
-      _id: user._id,  // ←追加！
+      _id: user._id,
       name: user.name,
       email: user.email,
       age: user.age,
@@ -56,7 +55,6 @@ app.post('/api/register', async (req, res) => {
       allergy: user.allergy,
       createdAt: user.createdAt
     };
-
 
     res.status(201).json({ message: '登録完了', user: userWithoutPassword });
 
@@ -82,9 +80,8 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ message: 'パスワードが正しくありません' });
     }
 
-    // パスワードを除いて返す
     const userWithoutPassword = {
-      _id: user._id,  // ←追加！
+      _id: user._id,
       name: user.name,
       email: user.email,
       age: user.age,
@@ -92,7 +89,6 @@ app.post('/api/login', async (req, res) => {
       allergy: user.allergy,
       createdAt: user.createdAt
     };
-
 
     res.json({ message: 'ログイン成功', user: userWithoutPassword });
 
@@ -126,7 +122,6 @@ app.get('/api/recommend/:userId', async (req, res) => {
   res.json(history);
 });
 
-
 app.post('/api/recommend', async (req, res) => {
   const {
     userId,
@@ -159,9 +154,6 @@ app.post('/api/recommend', async (req, res) => {
   }
 });
 
-
-
-
 app.get('/api/recommend/:userId', async (req, res) => {
   console.log('履歴取得リクエスト:', req.params.userId);
   try {
@@ -173,7 +165,7 @@ app.get('/api/recommend/:userId', async (req, res) => {
   }
 });
 
-// 推薦履歴削除
+// 履歴削除
 app.delete('/api/recommend/:id', async (req, res) => {
   try {
     await Recommendation.findByIdAndDelete(req.params.id);
@@ -193,7 +185,7 @@ app.patch('/api/user/:id', async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { name, email, age, gender, allergy },
-      { new: true } // 更新後のデータを返す
+      { new: true }
     );
 
     if (!updatedUser) {
@@ -217,9 +209,6 @@ app.patch('/api/user/:id', async (req, res) => {
     res.status(500).json({ message: '更新中にエラーが発生しました' });
   }
 });
-
-
-
 
 // 確認用ルート
 app.get('/', (req, res) => {

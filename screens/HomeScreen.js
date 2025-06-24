@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }) {
       const sorted = data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
-      setRecent(sorted.slice(0, 3)); // 最新3件
+      setRecent(sorted.slice(0, 3)); 
     } catch (err) {
       console.error('提案取得失敗:', err);
       setRecent([]);
@@ -89,35 +89,91 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 24, paddingTop: 64 },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 32, textAlign: 'center' },
-  welcome: { fontSize: 18, marginBottom: 16, textAlign: 'center' },
+  container: {
+    flex: 1,
+    backgroundColor: '#FAF9F6', 
+    padding: 24,
+    paddingTop: 64,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 28,
+    textAlign: 'center',
+    color: '#4E342E', 
+  },
+  welcome: {
+    fontSize: 18,
+    marginBottom: 16,
+    textAlign: 'center',
+    color: '#6D4C41',
+  },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#81C784',
     paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
+    borderRadius: 14,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
     marginBottom: 16,
   },
-  buttonText: { color: '#fff', fontSize: 18, textAlign: 'center' },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
   historyButton: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#C8E6C9', 
     paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 10,
+    borderRadius: 12,
+    alignItems: 'center',
     marginBottom: 24,
   },
-  historyButtonText: { color: '#333', fontSize: 16, textAlign: 'center', fontWeight: 'bold' },
-  subTitle: { fontSize: 20, marginBottom: 12 },
-  noData: { textAlign: 'center', color: '#999', marginTop: 20 },
-  card: {
-    backgroundColor: '#F0F0F0',
-    padding: 16,
-    borderRadius: 12,
-    marginRight: 12,
-    minWidth: 180,
+  historyButtonText: {
+    color: '#2E7D32',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
-  cardTitle: { fontSize: 16, fontWeight: '600' },
-  cardMood: { fontSize: 14, color: '#555', marginTop: 8 },
-  cardDate: { fontSize: 12, color: '#999', marginTop: 4 },
+  subTitle: {
+    fontSize: 20,
+    marginBottom: 12,
+    color: '#4E342E',
+    fontWeight: '600',
+  },
+  noData: {
+    textAlign: 'center',
+    color: '#999',
+    marginTop: 20,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    borderRadius: 14,
+    marginRight: 16,
+    minWidth: 200,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  cardTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#3E2723',
+  },
+  cardMood: {
+    fontSize: 14,
+    color: '#5D4037',
+    marginTop: 8,
+  },
+  cardDate: {
+    fontSize: 12,
+    color: '#8D6E63',
+    marginTop: 4,
+  },
 });
